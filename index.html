@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consumer Lottery System</title>
+    <title>Premium Lottery System</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         * {
@@ -14,7 +14,7 @@
         }
         
         body {
-            background: linear-gradient(135deg, #1a2a4c, #0a0f1d);
+            background: linear-gradient(135deg, #0a0f1d, #1a2a4c);
             color: #fff;
             min-height: 100vh;
             padding: 20px;
@@ -22,36 +22,55 @@
             flex-direction: column;
             align-items: center;
             overflow-x: hidden;
+            position: relative;
         }
         
         .container {
             max-width: 1200px;
             width: 100%;
             margin: 0 auto;
+            position: relative;
+            z-index: 10;
         }
         
         header {
             text-align: center;
             padding: 20px 0;
             margin-bottom: 30px;
-            border-bottom: 2px solid #4a6baf;
             position: relative;
         }
         
         h1 {
-            font-size: 2.8rem;
+            font-size: 3.2rem;
             text-transform: uppercase;
             letter-spacing: 3px;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             color: #ffd700;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+            background: linear-gradient(to right, #ff8c00, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+        }
+        
+        h1:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 4px;
+            background: linear-gradient(to right, #ff8c00, #ffd700);
+            border-radius: 2px;
         }
         
         .subtitle {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             color: #a9c1ff;
             max-width: 800px;
-            margin: 0 auto;
+            margin: 20px auto;
+            line-height: 1.6;
         }
         
         .main-content {
@@ -64,11 +83,12 @@
         .control-panel {
             flex: 1;
             min-width: 300px;
-            background: rgba(25, 35, 65, 0.7);
+            background: rgba(25, 35, 65, 0.85);
             border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
             border: 1px solid #4a6baf;
+            backdrop-filter: blur(5px);
         }
         
         .panel-title {
@@ -76,6 +96,7 @@
             margin-bottom: 25px;
             color: #4a9bff;
             text-align: center;
+            text-shadow: 0 0 10px rgba(74, 155, 255, 0.5);
         }
         
         .input-group {
@@ -91,18 +112,20 @@
         
         input {
             width: 100%;
-            padding: 15px;
-            border-radius: 8px;
+            padding: 16px;
+            border-radius: 10px;
             border: 2px solid #4a6baf;
             background: rgba(15, 25, 45, 0.8);
             color: white;
             font-size: 1.2rem;
             outline: none;
+            transition: all 0.3s ease;
         }
         
         input:focus {
             border-color: #4a9bff;
-            box-shadow: 0 0 10px rgba(74, 155, 255, 0.5);
+            box-shadow: 0 0 15px rgba(74, 155, 255, 0.7);
+            transform: translateY(-2px);
         }
         
         .draws-info {
@@ -114,15 +137,17 @@
         }
         
         .draws-info p {
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             font-size: 1.1rem;
             color: #a9c1ff;
+            line-height: 1.5;
         }
         
         .draws-info .highlight {
             color: #ffd700;
             font-weight: bold;
             font-size: 1.3rem;
+            text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
         }
         
         .btn {
@@ -130,7 +155,7 @@
             padding: 18px;
             font-size: 1.3rem;
             font-weight: bold;
-            border-radius: 8px;
+            border-radius: 10px;
             border: none;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -139,13 +164,15 @@
             background: linear-gradient(to right, #ff8c00, #ffd700);
             color: #0a0f1d;
             margin-top: 15px;
-            box-shadow: 0 5px 15px rgba(255, 140, 0, 0.4);
+            box-shadow: 0 5px 20px rgba(255, 140, 0, 0.6);
+            position: relative;
+            overflow: hidden;
         }
         
         .btn:hover {
             background: linear-gradient(to right, #ffd700, #ff8c00);
             transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(255, 140, 0, 0.6);
+            box-shadow: 0 8px 25px rgba(255, 140, 0, 0.8);
         }
         
         .btn:active {
@@ -157,6 +184,22 @@
             cursor: not-allowed;
             transform: none;
             box-shadow: none;
+        }
+        
+        .btn:after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 20px;
+            height: 200%;
+            background: rgba(255,255,255,0.3);
+            transform: rotate(25deg);
+            transition: all 0.8s;
+        }
+        
+        .btn:hover:after {
+            left: 120%;
         }
         
         .prizes-section {
@@ -172,31 +215,34 @@
         }
         
         .prize-card {
-            background: rgba(25, 35, 65, 0.7);
-            border-radius: 10px;
-            padding: 20px;
+            background: rgba(25, 35, 65, 0.85);
+            border-radius: 12px;
+            padding: 25px 20px;
             text-align: center;
             border: 1px solid;
-            transition: transform 0.3s ease;
+            transition: all 0.4s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(3px);
         }
         
         .prize-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5);
         }
         
         .prize-card.first {
             border-color: #ffd700;
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
         }
         
         .prize-card.second {
             border-color: #c0c0c0;
-            box-shadow: 0 0 15px rgba(192, 192, 192, 0.3);
+            box-shadow: 0 0 20px rgba(192, 192, 192, 0.4);
         }
         
         .prize-card.third {
             border-color: #cd7f32;
-            box-shadow: 0 0 15px rgba(205, 127, 50, 0.3);
+            box-shadow: 0 0 20px rgba(205, 127, 50, 0.4);
         }
         
         .prize-card.regular {
@@ -204,70 +250,79 @@
         }
         
         .prize-name {
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             margin: 15px 0;
             color: #fff;
+            font-weight: 600;
         }
         
         .prize-icon {
-            font-size: 3rem;
+            font-size: 3.5rem;
             margin-bottom: 15px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .result-section {
             width: 100%;
-            background: rgba(25, 35, 65, 0.7);
+            background: rgba(25, 35, 65, 0.85);
             border-radius: 15px;
-            padding: 25px;
+            padding: 30px;
             margin-top: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
             border: 1px solid #4a6baf;
+            backdrop-filter: blur(5px);
         }
         
         .results-container {
             display: flex;
             flex-wrap: wrap;
-            gap: 20px;
+            gap: 25px;
             min-height: 200px;
-            margin-top: 20px;
+            margin-top: 25px;
             justify-content: center;
         }
         
         .result-item {
-            width: 150px;
-            height: 180px;
+            width: 160px;
+            height: 190px;
             background: rgba(15, 25, 45, 0.8);
-            border-radius: 10px;
+            border-radius: 12px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 15px;
+            padding: 20px 15px;
             text-align: center;
             border: 2px solid #4a6baf;
             transition: all 0.5s ease;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
         }
         
         .result-item.win {
-            animation: pulse 1s ease;
+            animation: pulse 1.2s ease infinite;
         }
         
         @keyframes pulse {
             0% { transform: scale(1); box-shadow: 0 0 0 rgba(74, 155, 255, 0.5); }
-            50% { transform: scale(1.1); box-shadow: 0 0 20px rgba(74, 155, 255, 0.8); }
+            50% { transform: scale(1.08); box-shadow: 0 0 25px rgba(74, 155, 255, 0.9); }
             100% { transform: scale(1); box-shadow: 0 0 0 rgba(74, 155, 255, 0.5); }
         }
         
         .result-item .icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
+            font-size: 2.8rem;
+            margin-bottom: 18px;
+            transition: all 0.5s ease;
         }
         
         .result-item .name {
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             font-weight: bold;
+            margin-bottom: 8px;
         }
         
         .result-item .level {
@@ -276,8 +331,8 @@
             left: 0;
             width: 100%;
             background: rgba(0, 0, 0, 0.7);
-            padding: 5px;
-            font-size: 0.9rem;
+            padding: 8px 5px;
+            font-size: 0.95rem;
             font-weight: bold;
         }
         
@@ -287,13 +342,15 @@
         .level-regular { background: linear-gradient(to right, #4a9bff, #2a7bdf); }
         
         .footer {
-            margin-top: 30px;
+            margin-top: 40px;
             text-align: center;
             padding: 20px;
             color: #a9c1ff;
-            font-size: 0.9rem;
+            font-size: 1rem;
             border-top: 1px solid #4a6baf;
             width: 100%;
+            position: relative;
+            z-index: 10;
         }
         
         @media (max-width: 768px) {
@@ -302,12 +359,16 @@
             }
             
             .prizes-container {
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
             }
             
             .result-item {
-                width: 130px;
-                height: 160px;
+                width: 140px;
+                height: 170px;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
             }
         }
         
@@ -320,7 +381,7 @@
             to { opacity: 1; transform: scale(1); }
         }
         
-        /* 动画层 */
+        /* Animation overlay */
         #animation-overlay {
             position: fixed;
             top: 0;
@@ -447,15 +508,170 @@
             font-style: italic;
             text-align: center;
             width: 100%;
+            padding: 30px;
+            font-size: 1.2rem;
+        }
+        
+        /* Fireworks */
+        #fireworks-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 50;
+        }
+        
+        .premium-badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: linear-gradient(45deg, #ff8c00, #ffd700);
+            color: #0a0f1d;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            transform: rotate(15deg);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+        }
+        
+        /* 快速预览面板 */
+        .quick-summary {
+            background: rgba(15, 25, 45, 0.9);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            border: 1px solid #4a6baf;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 10px;
+            color: #a9c1ff;
+            font-size: 1.1rem;
+        }
+        
+        .summary-item {
+            text-align: center;
+            min-width: 120px;
+        }
+        
+        .summary-value {
+            font-weight: bold;
+            color: #ffd700;
+            font-size: 1.3rem;
+        }
+        
+        /* 二等奖和三等奖特殊效果 */
+        .special-prize {
+            position: relative;
+            overflow: visible;
+            z-index: 20;
+        }
+        
+        .special-prize::after {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border-radius: 15px;
+            z-index: -1;
+            animation: glow 2s infinite;
+        }
+        
+        .second-prize::after {
+            background: linear-gradient(45deg, rgba(192, 192, 192, 0.6), rgba(255, 255, 255, 0.8));
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
+        }
+        
+        .third-prize::after {
+            background: linear-gradient(45deg, rgba(205, 127, 50, 0.6), rgba(255, 215, 0, 0.8));
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
+        }
+        
+        @keyframes glow {
+            0% { opacity: 0.5; transform: scale(0.95); }
+            50% { opacity: 1; transform: scale(1.05); }
+            100% { opacity: 0.5; transform: scale(0.95); }
+        }
+        
+        /* 特殊奖品动画 */
+        @keyframes special-win {
+            0% { transform: scale(1); box-shadow: 0 0 0 rgba(255, 255, 255, 0.5); }
+            50% { transform: scale(1.1); box-shadow: 0 0 40px rgba(255, 255, 255, 0.9); }
+            100% { transform: scale(1); box-shadow: 0 0 0 rgba(255, 255, 255, 0.5); }
+        }
+        
+        .special-prize {
+            animation: special-win 2s infinite;
+        }
+        
+        /* 庆祝文字效果 */
+        .celebration-text {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 5rem;
+            font-weight: bold;
+            color: #ffd700;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            animation: celebrate 3s forwards;
+        }
+        
+        @keyframes celebrate {
+            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.2); }
+            20% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
+            40% { transform: translate(-50%, -50%) scale(1); }
+            80% { opacity: 1; }
+            100% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+        }
+        
+        .rules-section {
+            background: rgba(25, 35, 65, 0.85);
+            border-radius: 15px;
             padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            border: 1px solid #4a6baf;
+        }
+        
+        .rules-section h3 {
+            color: #4a9bff;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .rules-section ul {
+            padding-left: 20px;
+            color: #a9c1ff;
+        }
+        
+        .rules-section li {
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+        
+        .highlight-rule {
+            color: #ffd700;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
+    <canvas id="fireworks-canvas"></canvas>
+    
     <div class="container">
         <header>
-            <h1><i class="fas fa-gift"></i> Consumer Lottery System</h1>
-            <p class="subtitle">Experience the thrill of unboxing! Earn one draw for every 1000p spent</p>
+            <h1><i class="fas fa-gem"></i> Premium Lottery System</h1>
+            <p class="subtitle">Experience the thrill of our exclusive unboxing draw! Earn one draw for every 1000p spent. Unlock premium prizes with higher spending!</p>
+            <p class="subtitle"><i class="fas fa-star"></i> Good Luck! <i class="fas fa-star"></i></p>
         </header>
         
         <div class="main-content">
@@ -464,7 +680,7 @@
                 
                 <div class="input-group">
                     <label for="amount">Enter Spending Amount (p):</label>
-                    <input type="number" id="amount" min="0" placeholder="e.g. 1000" value="">
+                    <input type="number" id="amount" min="0" placeholder="e.g. 10000" value="">
                 </div>
                 
                 <div class="draws-info">
@@ -483,15 +699,17 @@
                 <h2 class="panel-title">Prize Tiers</h2>
                 <div class="prizes-container">
                     <div class="prize-card first">
+                        <div class="premium-badge">Grand Prize</div>
                         <div class="prize-icon"><i class="fas fa-crown"></i></div>
                         <h3 class="prize-name">First Prize</h3>
-                        <p>Grand Prize</p>
+                        <p>Ultimate Jackpot</p>
                     </div>
                     
                     <div class="prize-card second">
+                        <div class="premium-badge">Premium</div>
                         <div class="prize-icon"><i class="fas fa-medal"></i></div>
                         <h3 class="prize-name">Second Prize</h3>
-                        <p>Rare Item</p>
+                        <p>Exclusive Item</p>
                     </div>
                     
                     <div class="prize-card third">
@@ -509,13 +727,13 @@
                     <div class="prize-card regular">
                         <div class="prize-icon"><i class="fas fa-coins"></i></div>
                         <h3 class="prize-name">Fifth Prize</h3>
-                        <p>Standard Item</p>
+                        <p>Standard Item </p>
                     </div>
                     
                     <div class="prize-card regular">
                         <div class="prize-icon"><i class="far fa-smile"></i></div>
                         <h3 class="prize-name">Sixth Prize</h3>
-                        <p>Thank You</p>
+                        <p>Thank You for Playing</p>
                     </div>
                 </div>
             </div>
@@ -523,13 +741,28 @@
         
         <div class="result-section">
             <h2 class="panel-title">Lottery Results</h2>
+            
+            <!-- 快速预览面板 -->
+            <div class="quick-summary" id="quick-summary">
+                <p>Draw results will appear here after you start playing...</p>
+            </div>
+            
             <div class="results-container" id="results-container">
-                <p class="empty-message">Draw results will appear here...</p>
+                <p class="empty-message">Draw results will appear here after you start playing...</p>
             </div>
         </div>
         
+        <div class="rules-section">
+            <h3>Lottery Rules</h3>
+            <ul>
+                <li>Each 1000p spent = 1 lottery draw</li>
+                <li>Minimum spending: 1000p (1 draw)</li>
+                <li>Higher spending increases chances of winning premium prizes</li>
+            </ul>
+        </div>
+        
         <div class="footer">
-            <p>© 2025 999 Shopping Mall Consumer Lottery System</p>
+            <p>© 2025 Premium Shopping Mall Lottery System</p>
         </div>
     </div>
     
@@ -559,6 +792,8 @@
             const animationOverlay = document.getElementById('animation-overlay');
             const crate = document.querySelector('.crate');
             const prizeReveal = document.getElementById('prize-reveal');
+            const fireworksCanvas = document.getElementById('fireworks-canvas');
+            const quickSummary = document.getElementById('quick-summary');
             
             // Prizes configuration
             const prizes = [
@@ -588,6 +823,7 @@
                 
                 // Clear previous results
                 resultsContainer.innerHTML = '';
+                quickSummary.innerHTML = '';
                 
                 // Disable button
                 drawBtn.disabled = true;
@@ -597,6 +833,18 @@
                 animationOverlay.classList.add('show');
                 crate.classList.remove('open');
                 prizeReveal.classList.remove('show');
+                
+                // Initialize summary counters
+                const summary = {
+                    secondPrize: 0,
+                    thirdPrize: 0,
+                    otherPrizes: 0,
+                    total: draws
+                };
+                
+                // Flags for exclusive prizes
+                let secondPrizeDrawn = false;
+                let thirdPrizeDrawn = false;
                 
                 // Play animation sequence
                 setTimeout(() => {
@@ -611,14 +859,19 @@
                             
                             // Execute draws
                             const results = [];
-                            let secondPrizeDrawn = false;
                             
                             for (let i = 0; i < draws; i++) {
-                                const prize = drawPrize(draws, secondPrizeDrawn);
+                                const prize = drawPrize(draws, secondPrizeDrawn, thirdPrizeDrawn);
                                 
-                                // Check for second prize
+                                // Check if we won second or third prize
                                 if (prize.name === "Second Prize") {
                                     secondPrizeDrawn = true;
+                                    summary.secondPrize++;
+                                } else if (prize.name === "Third Prize") {
+                                    thirdPrizeDrawn = true;
+                                    summary.thirdPrize++;
+                                } else if (prize.name !== "Sixth Prize") {
+                                    summary.otherPrizes++;
                                 }
                                 
                                 results.push(prize);
@@ -626,11 +879,23 @@
                                 // Display result with delay
                                 setTimeout(() => {
                                     displayResult(prize, i + 1, draws);
+                                    
+                                    // Trigger fireworks and celebration for premium prizes
+                                    if (prize.name === "Second Prize") {
+                                        triggerFireworks();
+                                        createCelebration("AMAZING! SECOND PRIZE!");
+                                    } else if (prize.name === "Third Prize") {
+                                        triggerFireworks();
+                                        createCelebration("GREAT! THIRD PRIZE!");
+                                    }
                                 }, i * 500);
                             }
                             
-                            // Re-enable button
+                            // Update quick summary
                             setTimeout(() => {
+                                updateQuickSummary(summary);
+                                
+                                // Re-enable button
                                 drawBtn.disabled = false;
                                 drawBtn.innerHTML = '<i class="fas fa-gift"></i> Start Drawing';
                             }, draws * 500);
@@ -639,24 +904,24 @@
                 }, 500);
             });
             
-            // Draw prize logic
-            function drawPrize(drawCount, secondPrizeDrawn) {
+            // Draw prize logic with exclusive rule
+            function drawPrize(drawCount, secondPrizeDrawn, thirdPrizeDrawn) {
                 const rand = Math.random();
                 let selectedPrize = null;
                 
                 // Available prizes based on draw count
                 let availablePrizes;
-                if (drawCount >= 5) {
+                if (drawCount >= 10) {
                     availablePrizes = [
                         { name: "Second Prize", icon: "fa-medal", probability: secondPrizeDrawn ? 0 : 0.02, class: "second", level: "level-second" },
-                        { name: "Third Prize", icon: "fa-award", probability: 0.10, class: "third", level: "level-third" },
+                        { name: "Third Prize", icon: "fa-award", probability: thirdPrizeDrawn ? 0 : 0.10, class: "third", level: "level-third" },
                         { name: "Fourth Prize", icon: "fa-gem", probability: 0.30, class: "regular", level: "level-regular" },
                         { name: "Fifth Prize", icon: "fa-coins", probability: 0.50, class: "regular", level: "level-regular" },
                         { name: "Sixth Prize", icon: "fa-smile", probability: 1, class: "regular", level: "level-regular" }
                     ];
                 } else if (drawCount >= 3) {
                     availablePrizes = [
-                        { name: "Third Prize", icon: "fa-award", probability: 0.10, class: "third", level: "level-third" },
+                        { name: "Third Prize", icon: "fa-award", probability: thirdPrizeDrawn ? 0 : 0.10, class: "third", level: "level-third" },
                         { name: "Fourth Prize", icon: "fa-gem", probability: 0.30, class: "regular", level: "level-regular" },
                         { name: "Fifth Prize", icon: "fa-coins", probability: 0.50, class: "regular", level: "level-regular" },
                         { name: "Sixth Prize", icon: "fa-smile", probability: 1, class: "regular", level: "level-regular" }
@@ -669,7 +934,7 @@
                     ];
                 }
                 
-                // Calculate probabilities
+                // Calculate probabilities with exclusive rule
                 let cumulativeProbability = 0;
                 for (const prize of availablePrizes) {
                     cumulativeProbability += prize.probability;
@@ -687,6 +952,13 @@
             function displayResult(prize, drawNumber, totalDraws) {
                 const resultItem = document.createElement('div');
                 resultItem.className = `result-item ${prize.class}`;
+                
+                // Add special effects for premium prizes
+                if (prize.name === "Second Prize") {
+                    resultItem.classList.add('special-prize', 'second-prize');
+                } else if (prize.name === "Third Prize") {
+                    resultItem.classList.add('special-prize', 'third-prize');
+                }
                 
                 // Level indicator
                 const level = document.createElement('div');
@@ -728,6 +1000,134 @@
                 if (drawNumber === 1 && totalDraws > 0) {
                     prizeReveal.innerHTML = `<i class="fas ${prize.icon}"></i>`;
                 }
+            }
+            
+            // Update quick summary
+            function updateQuickSummary(summary) {
+                quickSummary.innerHTML = `
+                    <div class="summary-item">
+                        <div>Total Draws</div>
+                        <div class="summary-value">${summary.total}</div>
+                    </div>
+                    <div class="summary-item">
+                        <div>Second Prize</div>
+                        <div class="summary-value">${summary.secondPrize}</div>
+                    </div>
+                    <div class="summary-item">
+                        <div>Third Prize</div>
+                        <div class="summary-value">${summary.thirdPrize}</div>
+                    </div>
+                    <div class="summary-item">
+                        <div>Other Prizes</div>
+                        <div class="summary-value">${summary.otherPrizes}</div>
+                    </div>
+                `;
+            }
+            
+            // Create celebration text
+            function createCelebration(text) {
+                const celebration = document.createElement('div');
+                celebration.className = 'celebration-text';
+                celebration.textContent = text;
+                document.body.appendChild(celebration);
+                
+                setTimeout(() => {
+                    document.body.removeChild(celebration);
+                }, 3000);
+            }
+            
+            // Fireworks effect
+            function triggerFireworks() {
+                // Setup canvas
+                const ctx = fireworksCanvas.getContext('2d');
+                fireworksCanvas.width = window.innerWidth;
+                fireworksCanvas.height = window.innerHeight;
+                
+                // Firework particles
+                const particles = [];
+                const colors = ['#ff0000', '#ffff00', '#00ff00', '#00ffff', '#ff00ff', '#ff8c00', '#ffd700'];
+                
+                // Create firework
+                function createFirework(x, y) {
+                    const particleCount = 150;
+                    const angleIncrement = (Math.PI * 2) / particleCount;
+                    
+                    for (let i = 0; i < particleCount; i++) {
+                        const angle = i * angleIncrement;
+                        const speed = Math.random() * 5 + 2;
+                        const velocity = {
+                            x: Math.cos(angle) * speed,
+                            y: Math.sin(angle) * speed
+                        };
+                        
+                        particles.push({
+                            x: x,
+                            y: y,
+                            radius: Math.random() * 2 + 1,
+                            color: colors[Math.floor(Math.random() * colors.length)],
+                            velocity: velocity,
+                            alpha: 1,
+                            gravity: 0.05,
+                            friction: 0.95
+                        });
+                    }
+                }
+                
+                // Create multiple fireworks
+                for (let i = 0; i < 5; i++) {
+                    setTimeout(() => {
+                        createFirework(
+                            Math.random() * fireworksCanvas.width,
+                            Math.random() * fireworksCanvas.height / 2
+                        );
+                    }, i * 300);
+                }
+                
+                // Animate particles
+                function animate() {
+                    requestAnimationFrame(animate);
+                    ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+                    ctx.fillRect(0, 0, fireworksCanvas.width, fireworksCanvas.height);
+                    
+                    for (let i = 0; i < particles.length; i++) {
+                        const p = particles[i];
+                        
+                        p.velocity.x *= p.friction;
+                        p.velocity.y *= p.friction;
+                        p.velocity.y += p.gravity;
+                        
+                        p.x += p.velocity.x;
+                        p.y += p.velocity.y;
+                        
+                        p.alpha -= 0.005;
+                        
+                        if (p.alpha <= 0) {
+                            particles.splice(i, 1);
+                            i--;
+                            continue;
+                        }
+                        
+                        ctx.beginPath();
+                        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                        ctx.fillStyle = `rgba(${hexToRgb(p.color)}, ${p.alpha})`;
+                        ctx.fill();
+                    }
+                    
+                    // Clear canvas when all particles are gone
+                    if (particles.length === 0) {
+                        ctx.clearRect(0, 0, fireworksCanvas.width, fireworksCanvas.height);
+                    }
+                }
+                
+                // Helper function to convert hex to rgb
+                function hexToRgb(hex) {
+                    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+                    return result ? 
+                        `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` : 
+                        '255, 255, 255';
+                }
+                
+                animate();
             }
         });
     </script>
